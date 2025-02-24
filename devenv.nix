@@ -6,6 +6,7 @@ in
 
 {
   packages = [
+    unstable.argocd
     unstable.just
     unstable.kubectl
   ];
