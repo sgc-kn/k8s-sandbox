@@ -9,10 +9,10 @@ metadata:
 spec:
   tls:
   - hosts:
-      - whoami.k8s.sandbox.sgckn.pkel.dev
+      - whoami-test.k8s.sandbox.sgckn.pkel.dev
     secretName: whoami-tls
   rules:
-  - host: whoami.k8s.sandbox.sgckn.pkel.dev
+  - host: whoami-test.k8s.sandbox.sgckn.pkel.dev
     http:
       paths:
       - path: /
