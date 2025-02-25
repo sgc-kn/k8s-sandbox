@@ -1,5 +1,11 @@
 host := "any.k8s.sandbox.sgckn.pkel.dev"
 
+# update the argocd installation on the cluster
+update: argocd
+
+# run all commands for setting up the cluster
+setup: cluster config letsencrypt argocd
+
 # configure local k8s access
 config:
   ssh root@{{host}} microk8s config > $KUBECONFIG
@@ -17,19 +23,13 @@ cluster:
 
 # configure letsencrypt cluster issuers
 letsencrypt:
-  kubectl apply -f global/clusterissuer-letsencrypt-prod.yaml
-  kubectl apply -f global/clusterissuer-letsencrypt-staging.yaml
+  kubectl apply -f setup/clusterissuer-letsencrypt-prod.yaml
+  kubectl apply -f setup/clusterissuer-letsencrypt-staging.yaml
 
-# configure whoami (test deployment)
-whoami:
-  kubectl apply -f whoami/deployment.yaml
-  kubectl apply -f whoami/service.yaml
-  kubectl apply -f whoami/ingress.yaml
-
-# configure argocd
+# setup or update argocd
 argocd:
   kubectl create namespace argocd || true
   kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
-  kubectl apply -n argocd -f argocd/argocd-server-http-ingress.yml
+  kubectl apply -n argocd -f setup/argocd-server-http-ingress.yml
   sleep 1
   argocd admin initial-password -n argocd
