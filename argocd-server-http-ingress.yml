@@ -11,10 +11,10 @@ spec:
   ingressClassName: public
   tls:
   - hosts:
-    - argocd.k8s.sandbox.sgckn.pkel.dev
+    - argo.k8s.sandbox.sgckn.pkel.dev
     secretName: argocd-server-http-tls
   rules:
-  - host: argocd.k8s.sandbox.sgckn.pkel.dev
+  - host: argo.k8s.sandbox.sgckn.pkel.dev
     http:
       paths:
       - path: /
