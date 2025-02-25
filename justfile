@@ -15,17 +15,21 @@ cluster:
   ssh root@{{host}} microk8s enable ingress
   ssh root@{{host}} microk8s status --wait-ready
 
+# configure letsencrypt cluster issuers
+letsencrypt:
+  kubectl apply -f global/clusterissuer-letsencrypt-prod.yaml
+  kubectl apply -f global/clusterissuer-letsencrypt-staging.yaml
+
 # configure whoami (test deployment)
 whoami:
-  kubectl apply -f letsencrypt-prod.yaml
-  kubectl apply -f whoami-deployment.yaml
-  kubectl apply -f whoami-service.yaml
-  kubectl apply -f whoami-ingress.yaml
+  kubectl apply -f whoami/deployment.yaml
+  kubectl apply -f whoami/service.yaml
+  kubectl apply -f whoami/ingress.yaml
 
 # configure argocd
 argocd:
   kubectl create namespace argocd || true
   kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
-  kubectl apply -f argocd-server-http-ingress.yml
+  kubectl apply -n argocd -f argocd/argocd-server-http-ingress.yml
   sleep 1
   argocd admin initial-password -n argocd
