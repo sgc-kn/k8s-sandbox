@@ -12,12 +12,13 @@ spec:
     repoURL: https://dagster-io.github.io/helm
     targetRevision: 1.10.2
     helm:
-      valuesObject:
-        dagster-user-deployments:
-          deployments:
-            - name: platform
-              image: ghcr.io/sgc-kn/platform
-              tag: main
+      parameters:
+        - name: dagster-user-deployments.deployments[0].name
+          value: platform
+        - name: dagster-user-deployments.deployments[0].image
+          value: ghcr.io/sgc-kn/platform
+        - name: dagster-user-deployments.deployments[0].tag
+          value: main
   destination:
     server: "https://kubernetes.default.svc"
     namespace: dagster
