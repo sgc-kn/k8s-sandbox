@@ -19,6 +19,8 @@ spec:
               image:
                 repository: ghcr.io/sgc-kn/platform
                 tag: main
+                pullPolicy: always
+              port: 3030
   destination:
     server: "https://kubernetes.default.svc"
     namespace: dagster
