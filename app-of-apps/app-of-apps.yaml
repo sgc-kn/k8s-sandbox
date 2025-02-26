@@ -1,22 +1,21 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: whoami
+  name: app-of-apps
   namespace: argocd
-  finalizers:
-    - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   source:
     repoURL: git@github.com:sgc-kn/infra.git
-    path: whoami
+    path: app-of-apps
     targetRevision: HEAD # default branch
+    directory:
+      recurse: true
+      jsonnet: {}
   destination:
     server: "https://kubernetes.default.svc"
-    namespace: whoami
+    namespace: argocd
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
-    syncOptions:
-      - CreateNamespace=true
