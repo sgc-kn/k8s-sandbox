@@ -9,7 +9,7 @@ spec:
   project: default
   source:
     repoURL: git@github.com:sgc-kn/infra.git
-    path: whoami
+    path: shared
     targetRevision: HEAD # default branch
   destination:
     server: "https://kubernetes.default.svc"
