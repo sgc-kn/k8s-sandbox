@@ -6,7 +6,7 @@ metadata:
 spec:
   project: default
   source:
-    chart: dagster/dagster
+    chart: dagster
     repoURL: https://dagster-io.github.io/helm
     targetRevision: 1.10.2
   destination:
