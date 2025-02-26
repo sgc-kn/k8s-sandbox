@@ -9,5 +9,6 @@ in
     unstable.argocd
     unstable.just
     unstable.kubectl
+    unstable.kubernetes-helm
   ];
 }

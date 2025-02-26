@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: ingress
+  name: base
   namespace: argocd
   finalizers:
     - resources-finalizer.argocd.argoproj.io
@@ -9,11 +9,10 @@ spec:
   project: default
   source:
     repoURL: git@github.com:sgc-kn/infra.git
-    path: ingress
+    path: base
     targetRevision: HEAD # default branch
   destination:
     server: "https://kubernetes.default.svc"
-    namespace: ingress
   syncPolicy:
     automated:
       prune: true

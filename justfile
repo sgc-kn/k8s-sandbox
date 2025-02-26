@@ -23,13 +23,13 @@ cluster:
 
 # configure letsencrypt cluster issuers
 letsencrypt:
-  kubectl apply -f shared/clusterissuer-letsencrypt-prod.yaml
-  kubectl apply -f shared/clusterissuer-letsencrypt-staging.yaml
+  kubectl apply -f base/clusterissuer-letsencrypt-prod.yaml
+  kubectl apply -f base/clusterissuer-letsencrypt-staging.yaml
 
 # setup or update argocd
 argocd:
   kubectl create namespace argocd || true
   kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
-  kubectl apply -n argocd -f ingress/argocd-server.yaml
+  kubectl apply -f base/argocd-server-ingress.yaml
   sleep 1
   argocd admin initial-password -n argocd
