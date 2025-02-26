@@ -3,17 +3,20 @@ kind: Application
 metadata:
   name: whoami
   namespace: argocd
-project: default
-source:
-  repoURL: git@github.com:sgc-kn/infra.git
-  path: whoami
-  targetRevision: HEAD
-destination:
-  server: https://kubernetes.default.svc
-  namespace: whoami
-syncPolicy:
-  automated:
-    prune: true
-    selfHeal: true
-  syncOptions:
-    - CreateNamespace=true
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  source:
+    repoURL: git@github.com:sgc-kn/infra.git
+    path: whoami
+    targetRevision: HEAD
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: whoami
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
