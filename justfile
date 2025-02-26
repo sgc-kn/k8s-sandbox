@@ -1,15 +1,7 @@
 host := "any.k8s.sandbox.sgckn.pkel.dev"
 
-# update the argocd installation on the cluster
-update: argocd
-
-# run all commands for setting up the cluster
-setup: cluster config letsencrypt argocd
-
-# configure local k8s access
-config:
-  ssh root@{{host}} microk8s config > $KUBECONFIG
-  kubectl get svc > /dev/null
+# deploy to fresh cluster
+bootstrap: cluster config argocd
 
 # configure remote k8s cluster (ubuntu, microk8s)
 cluster:
@@ -21,15 +13,23 @@ cluster:
   ssh root@{{host}} microk8s enable ingress
   ssh root@{{host}} microk8s status --wait-ready
 
-# configure letsencrypt cluster issuers
-letsencrypt:
-  kubectl apply -f base/clusterissuer-letsencrypt-prod.yaml
-  kubectl apply -f base/clusterissuer-letsencrypt-staging.yaml
+# configure local k8s access
+config:
+  ssh root@{{host}} microk8s config > $KUBECONFIG
+  kubectl get svc > /dev/null
 
-# setup or update argocd
+# bootstrap argocd
 argocd:
+  # install argocd
   kubectl create namespace argocd || true
   kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
-  kubectl apply -f base/argocd-server-ingress.yaml
-  sleep 1
+
+  # configure access to private repo
+  bash setup-deploy-key.sh
+  read -p "Press Enter to continue"
+
+  # deploy all resources the app-of-apps pattern
+  kubectl apply -f app-of-apps/app-of-apps.yaml
+
+  # print admin's password
   argocd admin initial-password -n argocd
