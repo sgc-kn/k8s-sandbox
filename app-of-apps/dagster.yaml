@@ -12,7 +12,7 @@ spec:
     repoURL: https://dagster-io.github.io/helm
     targetRevision: 1.10.2
   helm:
-    valuesObject:
+    values: |
       dagster-user-deployments:
         deployments:
           - name: platform
