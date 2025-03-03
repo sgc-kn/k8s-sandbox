@@ -21,6 +21,11 @@ spec:
                 tag: main
                 pullPolicy: Always
               port: 3030
+              dagsterApiGrpcArgs:
+                - "dagster"
+                - "api"
+                - "--port"
+                - "3030"
   destination:
     server: "https://kubernetes.default.svc"
     namespace: dagster
