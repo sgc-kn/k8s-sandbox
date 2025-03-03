@@ -28,11 +28,12 @@ argocd:
   bash setup-deploy-key.sh
   read -p "Press Enter to continue"
 
-  # deploy all resources the app-of-apps pattern
-  kubectl apply -f app-of-apps/app-of-apps.yaml
-
   # print admin's password
   argocd admin initial-password -n argocd
+
+# deploy all resources the app-of-apps pattern
+app-of-apps:
+  kubectl apply -f app-of-apps/app-of-apps.yaml
 
 # forward argocd-server to http://localhost:8080
 fwd-argocd:
