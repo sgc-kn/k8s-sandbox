@@ -22,8 +22,6 @@ spec:
                 pullPolicy: Always
               port: 3030
               dagsterApiGrpcArgs:
-                - "dagster"
-                - "api"
                 - "--port"
                 - "3030"
   destination:
