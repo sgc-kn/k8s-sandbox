@@ -34,9 +34,13 @@ argocd:
   # print admin's password
   argocd admin initial-password -n argocd
 
-# forward dagster-webserver to http://localhost:8080
-dagster:
+# forward argocd-server to http://localhost:8080
+fwd-argocd:
+  kubectl port-forward svc/argocd-server -n argocd 8080:80
+
+# forward dagster-webserver to http://localhost:8081
+fwd-dagster:
   #!/usr/bin/env bash
   set -euxo pipefail
   pod=`kubectl get pods --namespace dagster -l "app.kubernetes.io/name=dagster,app.kubernetes.io/instance=dagster,component=dagster-webserver" -o jsonpath="{.items[0].metadata.name}"`
-  kubectl --namespace dagster port-forward $pod 8080:80
+  kubectl --namespace dagster port-forward $pod 8081:80
