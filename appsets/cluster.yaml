@@ -1,0 +1,37 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: cluster
+  namespace: argocd
+spec:
+  goTemplate: true
+  goTemplateOptions: ["missingkey=error"]
+  generators:
+    - matrix:
+        generators:
+          - git:
+              repoURL: git@github.com:sgc-kn/infra.git
+              revision: HEAD
+              directories:
+              - path: apps/*
+          - clusters:
+              values:
+                env: dev # TODO read this from cluster label or annotation
+  template:
+    metadata:
+      name: '{{ index .path.segments 1 }}-{{ .values.env }}'
+    spec:
+      project: default
+      source:
+        repoURL: git@github.com:sgc-kn/infra.git
+        targetRevision: HEAD
+        path: '{{ .path.path }}/{{ .values.env }}'
+      destination:
+        server: '{{ .server }}'
+        namespace: '{{ index .path.segments 1 }}-{{ .values.env }}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
