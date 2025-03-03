@@ -20,10 +20,7 @@ spec:
                 repository: ghcr.io/sgc-kn/platform
                 tag: main
                 pullPolicy: Always
-              port: 3030
-              dagsterApiGrpcArgs:
-                - "--port"
-                - "3030"
+              port: 80
   destination:
     server: "https://kubernetes.default.svc"
     namespace: dagster
