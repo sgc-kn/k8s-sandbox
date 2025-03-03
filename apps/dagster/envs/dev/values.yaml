@@ -1,0 +1,8 @@
+dagster-user-deployments:
+  deployments:
+    - name: platform
+      image:
+        repository: ghcr.io/sgc-kn/platform
+        tag: main
+        pullPolicy: Always
+      port: 80
