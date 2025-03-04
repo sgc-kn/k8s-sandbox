@@ -1,7 +1,7 @@
 host := "any.k8s.sandbox.sgckn.pkel.dev"
 
 # deploy to fresh cluster
-bootstrap: cluster config argocd
+bootstrap: cluster config argocd-bootstrap
 
 # configure remote k8s cluster (ubuntu, microk8s)
 cluster:
@@ -19,15 +19,22 @@ config:
   kubectl get svc > /dev/null
 
 # bootstrap argocd
-argocd:
+argocd-bootstrap: argocd-install argocd-key argocd-pwd
+
+# argocd: install
+argocd-install:
   # install argocd
   kubectl create namespace argocd || true
   kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
+# argocd: configure deploy key
+argocd-key:
   # configure access to private repo
   bash setup-deploy-key.sh
   read -p "Press Enter to continue"
 
+# argocd: print admin password
+argocd-pwd:
   # print admin's password
   argocd admin initial-password -n argocd
 

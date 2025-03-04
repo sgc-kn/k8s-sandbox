@@ -13,22 +13,24 @@ spec:
               repoURL: git@github.com:sgc-kn/infra.git
               revision: HEAD
               directories:
-              - path: apps/*
+              - path: apps/*/envs/*
           - clusters:
-              values:
-                env: dev # TODO read this from cluster label or annotation
+              selector:
+                matchLabels:
+                  argocd.argoproj.io/secret-type: cluster
+                  sgc-kn/environment: '{{ index .path.segments 3 }}'
   template:
     metadata:
-      name: '{{ index .path.segments 1 }}-{{ .values.env }}'
+      name: '{{ index .path.segments 1 }}-{{ index .path.segments 3 }}'
     spec:
       project: default
       source:
         repoURL: git@github.com:sgc-kn/infra.git
         targetRevision: HEAD
-        path: '{{ .path.path }}/{{ .values.env }}'
+        path: '{{ .path.path }}'
       destination:
         server: '{{ .server }}'
-        namespace: '{{ index .path.segments 1 }}-{{ .values.env }}'
+        namespace: '{{ index .path.segments 1 }}-{{ index .path.segments 3 }}'
       syncPolicy:
         automated:
           prune: true
