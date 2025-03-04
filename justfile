@@ -1,10 +1,13 @@
-host := "any.k8s.sandbox.sgckn.pkel.dev"
-
 # deploy to fresh cluster
-bootstrap: cluster config argocd-bootstrap
+# bootstrap: cluster config argocd-bootstrap
 
-# configure remote k8s cluster (ubuntu, microk8s)
-cluster:
+# setup and connect remote microk8s
+microk8s host:
+  just microk8s-setup {{host}}
+  just microk8s-connect {{host}}
+
+# setup remote k8s cluster (ubuntu, microk8s)
+microk8s-setup host:
   ssh root@{{host}} snap install microk8s --channel=latest/edge/strict
   ssh root@{{host}} microk8s start
   ssh root@{{host}} microk8s enable cert-manager
@@ -13,8 +16,8 @@ cluster:
   ssh root@{{host}} microk8s enable ingress
   ssh root@{{host}} microk8s status --wait-ready
 
-# configure local k8s access
-config:
+# setup kubectl connection for remote microk8s
+microk8s-connect host:
   ssh root@{{host}} microk8s config > $KUBECONFIG
   kubectl get svc > /dev/null
 
@@ -38,9 +41,13 @@ argocd-pwd:
   # print admin's password
   argocd admin initial-password -n argocd
 
-# deploy all resources the app-of-apps pattern
-app-of-apps:
-  kubectl apply -f app-of-apps/app-of-apps.yaml
+# deploy prod environment
+deploy-prod:
+  kubectl apply -f appsets/prod.yaml
+
+# deploy dev environment
+deploy-dev:
+  kubectl apply -f appsets/dev.yaml
 
 # forward argocd-server to http://localhost:8080
 fwd-argocd:
