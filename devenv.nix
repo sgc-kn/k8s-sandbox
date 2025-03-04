@@ -11,5 +11,6 @@ in
     unstable.kubectl
     unstable.kubernetes-helm
     unstable.minikube
+    unstable.updatecli
   ];
 }

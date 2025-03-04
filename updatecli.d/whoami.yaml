@@ -1,0 +1,28 @@
+name: "whoami"
+
+sources:
+  github:
+    kind: "githubrelease"
+    spec:
+      owner: "traefik"
+      repository: "whoami"
+      token: '{{ requiredEnv "GITHUB_TOKEN" }}'
+      username: '{{ requiredEnv "GITHUB_ACTOR" }}'
+      versionfilter:
+        kind: "latest"
+
+conditions:
+  image-available:
+    kind: "dockerimage"
+    spec:
+      image: "docker.io/traefik/whoami"
+      architecture: "amd64"
+      tag: '{{ source "github" }}'
+
+targets:
+  base-image:
+    kind: "file"
+    spec:
+      file: "./apps/whoami/base/deployment.yaml"
+      matchpattern: 'image: .*traefik/whoami:.*'
+      replacepattern: 'image: docker.io/traefik/whoami:{{ source "github" }}'

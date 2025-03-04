@@ -1,0 +1,28 @@
+name: "dagster"
+
+sources:
+  github:
+    kind: "githubrelease"
+    spec:
+      owner: "dagster-io"
+      repository: "dagster"
+      token: '{{ requiredEnv "GITHUB_TOKEN" }}'
+      username: '{{ requiredEnv "GITHUB_ACTOR" }}'
+      versionfilter:
+        kind: "latest"
+
+condition:
+  chart-available:
+    kind: "helmChart"
+    spec:
+      url: "https://dagster-io.github.io/helm"
+      name: "dagster"
+      version: '{{ source "github" }}'
+
+targets:
+  dev-chart:
+    kind: "file"
+    spec:
+      file: "./apps/dagster/envs/dev/Chart.yaml"
+      matchpattern: '(version|appVersion): .*'
+      replacepattern: '$1: {{ source "github" }}'
