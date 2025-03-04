@@ -22,6 +22,8 @@ spec:
   template:
     metadata:
       name: '{{ index .path.segments 1 }}-{{ index .path.segments 3 }}'
+      labels:
+        sgc-kn/appset: cluster
     spec:
       project: default
       source:
