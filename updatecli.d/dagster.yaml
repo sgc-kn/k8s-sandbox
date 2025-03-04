@@ -20,9 +20,10 @@ condition:
       version: '{{ source "github" }}'
 
 targets:
-  dev-chart:
+  chart:
     kind: "file"
     spec:
-      file: "./apps/dagster/envs/dev/Chart.yaml"
+      file: apps/dagster/envs/*/Chart.yaml
+      searchpattern: true  # enable glob in file
       matchpattern: '(version|appVersion): .*'
       replacepattern: '$1: {{ source "github" }}'
