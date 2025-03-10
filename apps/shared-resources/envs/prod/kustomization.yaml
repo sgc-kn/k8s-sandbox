@@ -3,3 +3,7 @@ kind: Kustomization
 
 resources:
 - ../../base
+- clusterissuer-letsencrypt-staging.yaml
+- clusterissuer-letsencrypt-prod.yaml
+
+patches:
