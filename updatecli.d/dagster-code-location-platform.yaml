@@ -9,7 +9,7 @@ sources:
       architecture: "amd64"
 
 targets:
-  base-image:
+  image-tag:
     kind: "file"
     spec:
       files:
