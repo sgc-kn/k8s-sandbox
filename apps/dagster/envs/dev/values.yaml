@@ -6,7 +6,7 @@ dagster:
       enabled: true
       servers:
         - name: "platform"
-          host: "platform"
+          host: "platform.platform-dev.svc.cluster.local"
           port: 80
   dagster-user-deployments:
     enabled: true
