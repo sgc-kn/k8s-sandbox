@@ -13,7 +13,7 @@ sources:
 
 conditions:
   chart-available:
-    kind: "helmChart"
+    kind: "helmchart"
     spec:
       url: "https://dagster-io.github.io/helm"
       name: "dagster"
