@@ -7,3 +7,4 @@ resources:
 - clusterissuer-letsencrypt-prod.yaml
 
 patches:
+  - path: infisical-environment-slug.yaml

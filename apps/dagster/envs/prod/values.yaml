@@ -1,9 +1,13 @@
+# The Helm chart allows configuring user deployments but we need more control.
+# We deploy our platform code manually and link manually instead.
 dagster:
+  dagsterWebserver:
+    workspace:
+      enabled: true
+      servers:
+        - name: "platform"
+          host: "platform.platform.svc.cluster.local"
+          port: 80
   dagster-user-deployments:
-    deployments:
-      - name: platform
-        image:
-          repository: ghcr.io/sgc-kn/platform
-          tag: v0.1.1-4035e4da # sgc-kn/platform
-          pullPolicy: Always
-        port: 80
+    enabled: true
+    enableSubchart: false

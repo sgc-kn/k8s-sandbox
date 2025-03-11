@@ -1,0 +1,10 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: platform
+spec:
+  template:
+    spec:
+      containers:
+        - name: platform
+          image: ghcr.io/sgc-kn/platform:v0.1.1-4035e4da

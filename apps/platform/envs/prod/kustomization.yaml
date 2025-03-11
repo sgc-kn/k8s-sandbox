@@ -5,4 +5,4 @@ resources:
 - ../../base
 
 patches:
-  - path: infisical-environment-slug.yaml
+  - path: version.yaml
