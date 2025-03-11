@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: prod
+  name: sgc-kn # same as other appset to enforce single appset per cluster
   namespace: argocd
 spec:
   goTemplate: true
