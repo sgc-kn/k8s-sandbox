@@ -21,7 +21,7 @@ spec:
                   sgc-kn/environment: '{{ index .path.segments 3 }}'
   template:
     metadata:
-      name: '{{ index .path.segments 1 }}-{{ index .path.segments 3 }}'
+      name: '{{ index .path.segments 1 }}'
       labels:
         sgc-kn/appset: cluster
     spec:
@@ -32,10 +32,14 @@ spec:
         path: '{{ .path.path }}'
       destination:
         server: '{{ .server }}'
-        namespace: '{{ index .path.segments 1 }}-{{ index .path.segments 3 }}'
+        namespace: '{{ index .path.segments 1 }}'
       syncPolicy:
         automated:
           prune: true
           selfHeal: true
+        managedNamespaceMetadata:
+          labels:
+            sgc-kn/appset: cluster
+            sgc-kn/manager: argocd
         syncOptions:
           - CreateNamespace=true

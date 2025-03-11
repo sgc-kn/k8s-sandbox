@@ -55,8 +55,4 @@ fwd-argocd:
 
 # forward dagster-webserver to http://localhost:8081
 fwd-dagster:
-  #!/usr/bin/env bash
-  set -euxo pipefail
-  pod=`kubectl get pods -Al app.kubernetes.io/name=dagster,component=dagster-webserver -o 'jsonpath={.items[0].metadata.name}'`
-  ns=`kubectl get pods -Al app.kubernetes.io/name=dagster,component=dagster-webserver -o 'jsonpath={.items[0].metadata.namespace}'`
-  kubectl port-forward --namespace $ns $pod 8081:80
+  kubectl port-forward svc/dagster-dagster-webserver -n dagster 8081:80
