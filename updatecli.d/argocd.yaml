@@ -1,0 +1,32 @@
+name: "argocd"
+
+sources:
+  github:
+    kind: "githubrelease"
+    spec:
+      owner: "argoproj"
+      repository: "argo-helm"
+      token: '{{ requiredEnv "GITHUB_TOKEN" }}'
+      username: '{{ requiredEnv "GITHUB_ACTOR" }}'
+      versionfilter:
+        kind: "regex"
+        pattern: '^argo-cd-\d+\.\d+\.\d+$'
+    transformers:
+      - trimPrefix: "argo-cd-"
+
+conditions:
+  chart-available:
+    kind: "helmChart"
+    spec:
+      url: "https://argoproj.github.io/argo-helm"
+      name: "argo-cd"
+      version: '{{ source "github" }}'
+
+targets:
+  chart:
+    kind: "file"
+    spec:
+      file: apps/argocd/envs/*/Chart.yaml
+      searchpattern: true  # enable glob in file
+      matchpattern: '(version|appVersion): .*'
+      replacepattern: '$1: {{ source "github" }}'
