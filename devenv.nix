@@ -13,4 +13,6 @@ in
     unstable.minikube
     unstable.updatecli
   ];
+
+  dotenv.disableHint = true; # we load this from .envrc
 }
