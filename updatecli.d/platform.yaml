@@ -15,5 +15,5 @@ targets:
       files:
         - "apps/platform/envs/*/version.yaml"
       searchpattern: true # enable glob in file
-      matchpattern: 'image: .*sgc-kn/platform:.*'
-      replacepattern: 'image: ghcr.io/sgc-kn/platform:{{ source "image" }}'
+      matchpattern: 'ghcr.io/sgc-kn/platform:.*'
+      replacepattern: 'ghcr.io/sgc-kn/platform:{{ source "image" }}'

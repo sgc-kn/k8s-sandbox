@@ -17,6 +17,9 @@ spec:
           image: ghcr.io/sgc-kn/platform:kustomize-this-label
           ports:
             - containerPort: 80
+          env:
+            - name: DAGSTER_CURRENT_IMAGE
+              value: ghcr.io/sgc-kn/platform:kustomize-this-label
           envFrom:
             - secretRef:
                 name: platform-env
