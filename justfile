@@ -43,10 +43,12 @@ argocd-pwd:
 
 # deploy prod environment
 deploy-prod:
+  ./setup-cluster-secrets.sh prod
   kubectl apply -f appsets/prod.yaml
 
 # deploy dev environment
 deploy-dev:
+  ./setup-cluster-secrets.sh dev
   kubectl apply -f appsets/dev.yaml
 
 # forward argocd-server to http://localhost:8080
