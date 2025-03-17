@@ -11,3 +11,10 @@ dagster:
   dagster-user-deployments:
     enabled: true
     enableSubchart: false
+  runLauncher:
+    type: K8sRunLauncher
+    config:
+      k8sRunLauncher:
+        jobNamespace: platform
+        envSecrets:
+          - name: platform-env
