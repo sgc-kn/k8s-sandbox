@@ -7,7 +7,7 @@ spec:
     spec:
       containers:
         - name: platform
-          image: ghcr.io/sgc-kn/platform:v0.1.1-4035e4da
+          image: ghcr.io/sgc-kn/platform:v0.1.5-89c9c1e9
           env:
             - name: DAGSTER_CURRENT_IMAGE
-              value: ghcr.io/sgc-kn/platform:v0.1.1-4035e4da
+              value: ghcr.io/sgc-kn/platform:v0.1.5-89c9c1e9
