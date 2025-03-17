@@ -6,4 +6,4 @@ spec:
   provider:
     infisical:
       secretsScope:
-        environmentSlug: prod
+        environmentSlug: dev
