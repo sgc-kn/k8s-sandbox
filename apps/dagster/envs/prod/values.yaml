@@ -13,5 +13,11 @@ dagster:
         port: 80
         envSecrets:
           - name: platform-env
-        annotations:
-          argocd.argoproj.io/compare-options: IgnoreExtraneous
+  runLaucher:
+    type: K8sRunLauncher
+    config:
+      k8sRunLauncher:
+        runK8sConfig:
+          jobMetadata:
+            annotations:
+              argocd.argoproj.io/compare-options: IgnoreExtraneous
