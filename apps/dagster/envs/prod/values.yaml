@@ -13,3 +13,5 @@ dagster:
         port: 80
         envSecrets:
           - name: platform-env
+        annotations:
+          argocd.argoproj.io/compare-options: IgnoreExtraneous
