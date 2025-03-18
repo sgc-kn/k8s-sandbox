@@ -13,7 +13,7 @@ dagster:
         port: 80
         envSecrets:
           - name: platform-env
-  runLaucher:
+  runLauncher:
     type: K8sRunLauncher
     config:
       k8sRunLauncher:
