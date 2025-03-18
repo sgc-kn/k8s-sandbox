@@ -3,3 +3,8 @@ kind: Kustomization
 
 resources:
 - github.com/argoproj/argo-cd/manifests/cluster-install?ref=v2.14.5
+
+patches:
+  - path: argocd-cm.yaml
+  - path: argocd-cmd-params-cm.yaml
+  - path: argocd-rbac-cm.yaml
