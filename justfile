@@ -28,7 +28,8 @@ argocd-bootstrap: argocd-install argocd-key argocd-pwd
 argocd-install:
   # install argocd
   kubectl create namespace argocd || true
-  kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+  kubectl apply -n argocd -k apps/argocd/envs/dev
+  # no matter the env; this will be overruled by just deploy-* later
 
 # argocd: configure deploy key
 argocd-key:

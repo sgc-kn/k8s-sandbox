@@ -1,0 +1,20 @@
+name: "argocd"
+
+sources:
+  github:
+    kind: "githubrelease"
+    spec:
+      owner: "argoproj"
+      repository: "argo-cd"
+      token: '{{ requiredEnv "GITHUB_TOKEN" }}'
+      username: '{{ requiredEnv "GITHUB_ACTOR" }}'
+      versionfilter:
+        kind: "latest"
+
+targets:
+  kustomization:
+    kind: "file"
+    spec:
+      file: apps/argocd/base/kustomization.yaml
+      matchpattern: 'github.com/argoproj/argo-cd//manifests/cluster-install\?ref=.*'
+      replacepattern: 'github.com/argoproj/argo-cd//manifests/cluster-install?ref={{ source "github" }}'
