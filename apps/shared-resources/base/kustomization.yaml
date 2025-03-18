@@ -3,3 +3,4 @@ kind: Kustomization
 
 resources:
   - clustersecretstore-infisical-platform.yaml
+  - clusterexternalsecret-infisical-platform.yaml
