@@ -22,7 +22,7 @@ microk8s-connect host:
   kubectl get svc > /dev/null
 
 # bootstrap argocd
-argocd-bootstrap: argocd-install argocd-key argocd-pwd
+argocd-bootstrap: argocd-install argocd-key
 
 # argocd: install
 argocd-install:
@@ -36,11 +36,6 @@ argocd-key:
   # configure access to private repo
   bash setup-deploy-key.sh
   read -p "Press Enter to continue"
-
-# argocd: print admin password
-argocd-pwd:
-  # print admin's password
-  argocd admin initial-password -n argocd
 
 # deploy prod environment
 deploy-prod:
