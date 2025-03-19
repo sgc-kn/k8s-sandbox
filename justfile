@@ -39,18 +39,24 @@ argocd-key:
 
 # deploy prod environment
 deploy-prod:
+  kubectl config rename-context $(kubectl config current-context) prod || true
   ./setup-cluster-secrets.sh prod
   kubectl apply -f appsets/prod.yaml
 
 # deploy dev environment
 deploy-dev:
+  kubectl config rename-context $(kubectl config current-context) dev || true
   ./setup-cluster-secrets.sh dev
   kubectl apply -f appsets/dev.yaml
 
-# forward argocd-server to http://localhost:8080
-fwd-argocd:
-  kubectl port-forward svc/argocd-server -n argocd 8080:80
+fwd-dev-argocd:
+  kubectl --context dev port-forward svc/argocd-server -n argocd 8080:80
 
-# forward dagster-webserver to http://localhost:8081
-fwd-dagster:
-  kubectl port-forward svc/dagster-dagster-webserver -n dagster 8081:80
+fwd-prod-argocd:
+  kubectl --context prod port-forward svc/argocd-server -n argocd 8000:80
+
+fwd-dev-dagster:
+  kubectl --context dev port-forward svc/dagster-dagster-webserver -n dagster 8081:80
+
+fwd-prod-dagster:
+  kubectl --context prod port-forward svc/dagster-dagster-webserver -n dagster 8001:80
