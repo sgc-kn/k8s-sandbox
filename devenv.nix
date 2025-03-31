@@ -8,9 +8,9 @@ in
   packages = [
     unstable.argocd
     unstable.just
+    unstable.kind
     unstable.kubectl
     unstable.kubernetes-helm
-    unstable.minikube
     unstable.updatecli
   ];
 

@@ -14,10 +14,10 @@ just argocd-bootstrap   # follow instructions
 just deploy-prod
 ```
 
-Deploy the dev environment in local minikube cluster:
+Deploy the dev environment in local docker/podman/nerdctl cluster:
 ```shell
-minikube delete  # to start from scratch.
-minikube start --cpus=4 --memory=8G
+kind delete cluster --name dev  # to start from scratch.
+kind create cluster --name dev
 just argocd-bootstrap  # follow instructions
 just deploy-dev
 ```
