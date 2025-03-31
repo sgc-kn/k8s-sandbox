@@ -7,6 +7,10 @@ sources:
       tagfilter: '^v\d+\.\d+\.\d+-.*$'
       image: "ghcr.io/sgc-kn/platform"
       architecture: "amd64"
+      versionfilter:
+        kind: "regex/semver"
+        pattern: "*"
+        regex: '^v(\d+\.\d+\.\d+)-.*$'
 
 targets:
   version:
