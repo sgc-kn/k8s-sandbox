@@ -13,7 +13,7 @@ dagster:
         port: 80
         env:
           - name: ENABLE_ALL_SCHEDULES
-            value: 1 # value does not matter; unset variable if need be
+            value: '' # value does not matter; unset variable if need be
         envSecrets:
           - name: platform-env
   runLauncher:
