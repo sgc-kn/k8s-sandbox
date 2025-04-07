@@ -5,7 +5,7 @@ set -eEuo pipefail
 TEMP_DIR=$(mktemp -d)
 KEY_NAME="$TEMP_DIR/id"
 REPO_URL="git@github.com:sgc-kn/infra.git"
-COMMENT="argocd@k8s.sandbox.sgckn.pkel.dev"
+COMMENT="argocd@${1:-$USER.$HOST}"
 
 # Ensure cleanup on exit, error, interrupt, and termination
 cleanup() {

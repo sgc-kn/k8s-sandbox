@@ -21,42 +21,54 @@ microk8s-connect host:
   ssh root@{{host}} microk8s config > $KUBECONFIG
   kubectl get svc > /dev/null
 
-# bootstrap argocd
-argocd-bootstrap: argocd-install argocd-key
+# create local development cluster
+kind-create:
+  kind create cluster --name dev --config setup/kind-dev-cluster.yaml
+  # install NGINX Gateway Fabric (for Gateway API)
+  # TODO: do this with argo
+  kubectl kustomize "https://github.com/nginx/nginx-gateway-fabric/config/crd/gateway-api/standard?ref=v1.6.2" | kubectl apply -f -
+  helm install ngf oci://ghcr.io/nginx/charts/nginx-gateway-fabric --create-namespace -n nginx-gateway --version 1.6.2 --set service.create=false
+  just kind-secrets
+  just argocd-install
+  just deploy-dev
+
+# delete local development cluster
+kind-delete:
+  kind delete cluster --name dev
+
+# install cluster secrets to local development cluster
+kind-secrets:
+  # argo-cd / git deploy key
+  kubectl create namespace argocd || true
+  ./setup/argocd-deploy-key.sh "kind-dev.$USER.$HOSTNAME"
+  read -p "Press Enter to continue"
+  # infisical secrets auth
+  ./setup/infisical-machine-auth.sh dev
 
 # argocd: install
 argocd-install:
   # install argocd
   kubectl create namespace argocd || true
-  kubectl apply -n argocd -k apps/argocd/envs/dev
+  kubectl apply -n argocd -k apps/argocd/envs/dev --wait
   # no matter the env; this will be overruled by just deploy-* later
-
-# argocd: configure deploy key
-argocd-key:
-  # configure access to private repo
-  bash setup-deploy-key.sh
-  read -p "Press Enter to continue"
 
 # deploy prod environment
 deploy-prod:
   kubectl config rename-context $(kubectl config current-context) prod || true
-  ./setup-cluster-secrets.sh prod
   kubectl apply -f appsets/prod.yaml
 
 # deploy dev environment
 deploy-dev:
-  kubectl config rename-context $(kubectl config current-context) dev || true
-  ./setup-cluster-secrets.sh dev
   kubectl apply -f appsets/dev.yaml
 
 fwd-dev-argocd:
-  kubectl --context dev port-forward svc/argocd-server -n argocd 8080:80
+  kubectl --context kind-dev port-forward svc/argocd-server -n argocd 8080:80
 
 fwd-prod-argocd:
   kubectl --context prod port-forward svc/argocd-server -n argocd 8000:80
 
 fwd-dev-dagster:
-  kubectl --context dev port-forward svc/dagster-dagster-webserver -n dagster 8081:80
+  kubectl --context kind-dev port-forward svc/dagster-dagster-webserver -n dagster 8081:80
 
 fwd-prod-dagster:
   kubectl --context prod port-forward svc/dagster-dagster-webserver -n dagster 8001:80
