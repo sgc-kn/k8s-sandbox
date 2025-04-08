@@ -5,6 +5,7 @@ resources:
   - https://raw.githubusercontent.com/nginx/nginx-gateway-fabric/v1.6.2/deploy/crds.yaml
   - https://raw.githubusercontent.com/nginx/nginx-gateway-fabric/v1.6.2/deploy/default/deploy.yaml
   - gateway.yaml
+  - httproute-dagster.yaml
 
 patches:
   - path: nodeport.yaml

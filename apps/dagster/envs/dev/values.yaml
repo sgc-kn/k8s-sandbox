@@ -1,6 +1,8 @@
 # The Helm chart allows configuring user deployments but we need more control.
 # We deploy our platform code manually and link manually instead.
 dagster:
+  dagsterWebserver:
+    pathPrefix: /dagster
   dagster-user-deployments:
     enabled: true
     enableSubchart: true

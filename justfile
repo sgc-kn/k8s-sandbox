@@ -70,9 +70,9 @@ fwd-prod-argocd:
   kubectl --context prod port-forward svc/argocd-server -n argocd 8000:80
 
 fwd-dev-dagster:
-  # http://localhost:8081
+  # http://localhost:8081/dagster
   kubectl --context kind-dev port-forward svc/dagster-dagster-webserver -n dagster 8081:80
 
 fwd-prod-dagster:
-  # http://localhost:8001
+  # http://localhost:8001/dagster
   kubectl --context prod port-forward svc/dagster-dagster-webserver -n dagster 8001:80
