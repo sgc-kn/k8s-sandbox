@@ -3,4 +3,5 @@ kind: ConfigMap
 metadata:
   name: argocd-cm
 data:
+  application.resourceTrackingMethod: "annotation+label"
   users.anonymous.enabled: "true"
