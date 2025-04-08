@@ -42,8 +42,8 @@ kind-secrets:
   kubectl create namespace argocd || true
   ./setup/argocd-deploy-key.sh "kind-dev.$USER.$HOSTNAME"
   read -p "Press Enter to continue"
-  # infisical secrets auth
-  ./setup/infisical-machine-auth.sh dev
+  # infisical platform auth
+  ./setup/infisical-platform-auth.sh dev
 
 # argocd: install
 argocd-install:
