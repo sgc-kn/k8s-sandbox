@@ -3,6 +3,9 @@
 dagster:
   dagsterWebserver:
     pathPrefix: /dagster
+    readinessProbe:
+      httpGet:
+        path: /dagster/server_info # why doesn't this apply pathPrefix?
   dagster-user-deployments:
     enabled: true
     enableSubchart: true
