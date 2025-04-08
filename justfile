@@ -62,13 +62,17 @@ deploy-dev:
   kubectl apply -f appsets/dev.yaml
 
 fwd-dev-argocd:
+  # http://localhost:8080/argocd
   kubectl --context kind-dev port-forward svc/argocd-server -n argocd 8080:80
 
 fwd-prod-argocd:
+  # http://localhost:8000/argocd
   kubectl --context prod port-forward svc/argocd-server -n argocd 8000:80
 
 fwd-dev-dagster:
+  # http://localhost:8081
   kubectl --context kind-dev port-forward svc/dagster-dagster-webserver -n dagster 8081:80
 
 fwd-prod-dagster:
+  # http://localhost:8001
   kubectl --context prod port-forward svc/dagster-dagster-webserver -n dagster 8001:80
