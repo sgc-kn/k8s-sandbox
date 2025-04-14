@@ -19,3 +19,7 @@ Deploy the dev environment in local docker/podman/nerdctl cluster:
 just kind-delete # to start from scratch
 just kind-create # follow instructions
 ```
+Note, this requires some kernel configs. Otherwise you will likely run
+into inotify resource limits. [See kind FAQ][inotify].
+
+[inotify]: https://kind.sigs.k8s.io/docs/user/known-issues/#pod-errors-due-to-too-many-open-files
