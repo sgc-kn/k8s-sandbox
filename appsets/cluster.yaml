@@ -10,7 +10,7 @@ spec:
     - matrix:
         generators:
           - git:
-              repoURL: git@github.com:sgc-kn/infra.git
+              repoURL: git@github.com:sgc-kn/k8s-sandbox.git
               revision: HEAD
               directories:
               - path: apps/*/envs/*
@@ -27,7 +27,7 @@ spec:
     spec:
       project: default
       source:
-        repoURL: git@github.com:sgc-kn/infra.git
+        repoURL: git@github.com:sgc-kn/k8s-sandbox.git
         targetRevision: HEAD
         path: '{{ .path.path }}'
       destination:
