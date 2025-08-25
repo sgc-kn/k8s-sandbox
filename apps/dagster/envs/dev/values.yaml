@@ -20,7 +20,7 @@ dagster:
       - name: platform
         image:
           repository: ghcr.io/sgc-kn/platform
-          tag: v0.1.61-ecd68cc5 # ghcr.io/sgc-kn/platform
+          tag: v0.1.62-71ea00a9 # ghcr.io/sgc-kn/platform
           pullPolicy: IfNotPresent
         port: 80
         env:
