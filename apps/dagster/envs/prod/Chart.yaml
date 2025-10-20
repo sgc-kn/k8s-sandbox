@@ -2,10 +2,10 @@ apiVersion: v2
 type: application
 name: dagster
 
-version: 1.11.13
-appVersion: 1.11.13
+version: 1.11.15
+appVersion: 1.11.15
 
 dependencies:
   - name: dagster
     repository: https://dagster-io.github.io/helm
-    version: 1.11.13
+    version: 1.11.15
